@@ -256,8 +256,12 @@ def main():
         # for dev
         global_trans = param_right['Th']
         n = np.asarray(global_trans).shape[0]
-        param_right['Th'] = np.zeros((n, 3)).tolist() 
-        param_left['Th'] = (np.zeros((n, 3)) + np.asarray([[5,0,0]])).tolist()
+        param_right['Th'] = np.asarray(global_trans).mean(axis=0, keepdims=True).repeat(n, axis=0).tolist()
+
+        global_trans = param_left['Th']
+        n = np.asarray(global_trans).shape[0]
+        param_left['Th'] = np.asarray(global_trans).mean(axis=0, keepdims=True).repeat(n, axis=0).tolist()
+
         vertices_right = body_model_right(return_verts=True, return_tensor=False, **param_right)[0]
         vertices_left = body_model_left(return_verts=True, return_tensor=False, **param_left)[0]
         faces = body_model_left.faces
