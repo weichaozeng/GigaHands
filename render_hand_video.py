@@ -236,13 +236,13 @@ def main():
 
     # hand poses
     chosen_hand_union_frames, chosen_hand_intersect_frames = hand_pose_loader(keypoints3d_path)
-    valid_length = len(chosen_hand_union_frames)
+    valid_length = len(chosen_hand_intersect_frames)
     if valid_length == 0:
         print("No frames with both hand detected.")
         return
 
     # Load MANO parameters of joint-valid frames
-    video_indices_in_hand_iou_indices = np.asarray([chosen_hand_union_frames.index(f) for f in chosen_hand_union_frames])
+    video_indices_in_hand_iou_indices = np.asarray([chosen_hand_union_frames.index(f) for f in chosen_hand_intersect_frames])
     mano_params_right, mano_params_left = hand_mano_loader(mano_main_path, video_indices_in_hand_iou_indices)
    
     body_model_right, body_model_left = load_body_model(model_path="body_models")
@@ -253,6 +253,11 @@ def main():
     for abs_idx in tqdm(range(valid_length), desc="Rendering frames"):
         param_right = mano_params_right[abs_idx]
         param_left = mano_params_left[abs_idx]
+        # for dev
+        global_trans = param_right['Th']
+        n = np.asarray(global_trans).shape[0]
+        param_right['Th'] = np.zeros((n, 3)).tolist() 
+        param_left['Th'] = (np.zeros((n, 3)) + np.asarray([[5,0,0]])).tolist()
         vertices_right = body_model_right(return_verts=True, return_tensor=False, **param_right)[0]
         vertices_left = body_model_left(return_verts=True, return_tensor=False, **param_left)[0]
         faces = body_model_left.faces
