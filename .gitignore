@@ -1,3 +1,4 @@
 body_models/smplh/*
 __pycache__/
 *.pyc
+dataset/hand_poses
