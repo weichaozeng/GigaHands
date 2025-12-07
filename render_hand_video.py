@@ -249,19 +249,20 @@ def main():
 
     render = Renderer(height=720, width=1280, faces=None, extra_mesh=[])
 
+
+    # for dev
+    global_trans = mano_params_right['Th']
+    n = np.asarray(global_trans).shape[0]
+    mano_params_right['Th'] = np.asarray(global_trans).mean(axis=0, keepdims=True).repeat(n, axis=0).tolist()
+
+    global_trans = mano_params_left['Th']
+    n = np.asarray(global_trans).shape[0]
+    mano_params_left['Th'] = np.asarray(global_trans).mean(axis=0, keepdims=True).repeat(n, axis=0).tolist()
+
     frames = []
     for abs_idx in tqdm(range(valid_length), desc="Rendering frames"):
         param_right = mano_params_right[abs_idx]
         param_left = mano_params_left[abs_idx]
-        # for dev
-        global_trans = param_right['Th']
-        n = np.asarray(global_trans).shape[0]
-        param_right['Th'] = np.asarray(global_trans).mean(axis=0, keepdims=True).repeat(n, axis=0).tolist()
-
-        global_trans = param_left['Th']
-        n = np.asarray(global_trans).shape[0]
-        param_left['Th'] = np.asarray(global_trans).mean(axis=0, keepdims=True).repeat(n, axis=0).tolist()
-
         vertices_right = body_model_right(return_verts=True, return_tensor=False, **param_right)[0]
         vertices_left = body_model_left(return_verts=True, return_tensor=False, **param_left)[0]
         faces = body_model_left.faces
