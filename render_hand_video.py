@@ -180,15 +180,14 @@ def hand_mano_loader(path, idx_in_hand_iou_indices):
     params_left_list = manos_params['left']
     params_right_list = manos_params['right']
 
-    # for dev
-    global_trans = params_left_list['Th']
-    n = np.asarray(global_trans).shape[0]
-    params_left_list['Th'] = np.asarray(global_trans).mean(axis=0, keepdims=True).repeat(n, axis=0).tolist()
+    # # for dev to move away global translation
+    # global_trans = params_left_list['Th']
+    # n = np.asarray(global_trans).shape[0]
+    # params_left_list['Th'] = np.asarray(global_trans).mean(axis=0, keepdims=True).repeat(n, axis=0).tolist()
 
-    global_trans = params_right_list['Th']
-    n = np.asarray(global_trans).shape[0]
-    params_right_list['Th'] = np.asarray(global_trans).mean(axis=0, keepdims=True).repeat(n, axis=0).tolist()
-
+    # global_trans = params_right_list['Th']
+    # n = np.asarray(global_trans).shape[0]
+    # params_right_list['Th'] = np.asarray(global_trans).mean(axis=0, keepdims=True).repeat(n, axis=0).tolist()
 
     params_left = {k: np.asarray(v) for k, v in params_left_list.items()}
     params_right = {k: np.asarray(v) for k, v in params_right_list.items()}
