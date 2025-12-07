@@ -179,6 +179,17 @@ def hand_mano_loader(path, idx_in_hand_iou_indices):
         manos_params = json.load(f)
     params_left_list = manos_params['left']
     params_right_list = manos_params['right']
+
+    # for dev
+    global_trans = params_left_list['Th']
+    n = np.asarray(global_trans).shape[0]
+    params_left_list['Th'] = np.asarray(global_trans).mean(axis=0, keepdims=True).repeat(n, axis=0).tolist()
+
+    global_trans = params_right_list['Th']
+    n = np.asarray(global_trans).shape[0]
+    params_right_list['Th'] = np.asarray(global_trans).mean(axis=0, keepdims=True).repeat(n, axis=0).tolist()
+
+
     params_left = {k: np.asarray(v) for k, v in params_left_list.items()}
     params_right = {k: np.asarray(v) for k, v in params_right_list.items()}
     choosen_frame = np.asarray(list(range(len(params_left_list['poses']))))
@@ -248,16 +259,6 @@ def main():
     body_model_right, body_model_left = load_body_model(model_path="body_models")
 
     render = Renderer(height=720, width=1280, faces=None, extra_mesh=[])
-
-
-    # for dev
-    global_trans = mano_params_right['Th']
-    n = np.asarray(global_trans).shape[0]
-    mano_params_right['Th'] = np.asarray(global_trans).mean(axis=0, keepdims=True).repeat(n, axis=0).tolist()
-
-    global_trans = mano_params_left['Th']
-    n = np.asarray(global_trans).shape[0]
-    mano_params_left['Th'] = np.asarray(global_trans).mean(axis=0, keepdims=True).repeat(n, axis=0).tolist()
 
     frames = []
     for abs_idx in tqdm(range(valid_length), desc="Rendering frames"):
