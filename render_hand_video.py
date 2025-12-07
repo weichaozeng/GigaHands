@@ -75,7 +75,7 @@ def get_projections(params, cam_names, n_Frames=1):
     projs, intrs, dists, rot, trans = [], [], [], [], []
     for param in params:
         # if param["cam_name"] == cam_names:
-        if param == params[0]:  # For dev, just use the first camera
+        if param == params[1]:  # For dev, just use the first camera
             extr = param_utils.get_extr(param)
             intr, dist = param_utils.get_intr(param)
             r, t = param_utils.get_rot_trans(param)
