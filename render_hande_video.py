@@ -25,18 +25,14 @@ def parse_args():
     parser = argparse.ArgumentParser(
         description="Render mesh/hand pose sequences from tracked data and save as video."
     )
-    parser.add_argument('--dataset_root', type=Path, required=True,
+    parser.add_argument('--dataset_root', type=Path, default="dataset/",
                         help='Path to the dataset root folder')
-    parser.add_argument('--scene_name', type=str, required=True,
+    parser.add_argument('--scene_name', type=str, default="p007-laptop",
                         help='Scene name (e.g. 17_instruments)')
-    parser.add_argument('--session_name', type=str, required=True,
+    parser.add_argument('--session_name', type=str, default="p007-laptop",
                         help='Session name (e.g. p003-instrument)')
-    parser.add_argument('--seq_id', type=int, required=True,
+    parser.add_argument('--seq_id', type=int, default=0,
                         help='Sequence ID (e.g. 33)')
-    parser.add_argument('--object_name', type=str, required=True,
-                        help='Object name (e.g. ukelele_scan)')
-    parser.add_argument('--mesh_name', type=str, required=True,
-                        help='Mesh filename (e.g. ukelele-simplified1_1.obj)')
     parser.add_argument('--render_camera', type=str, default='brics-odroid-011_cam0',
                         help='Camera name for rendering')
     parser.add_argument('--save_root', type=Path, default=Path('visualizations'),
@@ -78,7 +74,8 @@ def get_projections(params, cam_names, n_Frames=1):
     """Returns camera intrinsics, extrinsics, projections, and distortion parameters for the named camera."""
     projs, intrs, dists, rot, trans = [], [], [], [], []
     for param in params:
-        if param["cam_name"] == cam_names:
+        # if param["cam_name"] == cam_names:
+        if param == params[0]:  # For dev, just use the first camera
             extr = param_utils.get_extr(param)
             intr, dist = param_utils.get_intr(param)
             r, t = param_utils.get_rot_trans(param)
