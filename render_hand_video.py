@@ -236,13 +236,13 @@ def main():
 
     # hand poses
     chosen_hand_union_frames, chosen_hand_intersect_frames = hand_pose_loader(keypoints3d_path)
-    valid_length = len(chosen_hand_intersect_frames)
+    valid_length = len(chosen_hand_union_frames)
     if valid_length == 0:
         print("No frames with both hand detected.")
         return
 
     # Load MANO parameters of joint-valid frames
-    video_indices_in_hand_iou_indices = np.asarray([chosen_hand_union_frames.index(f) for f in chosen_hand_intersect_frames])
+    video_indices_in_hand_iou_indices = np.asarray([chosen_hand_union_frames.index(f) for f in chosen_hand_union_frames])
     mano_params_right, mano_params_left = hand_mano_loader(mano_main_path, video_indices_in_hand_iou_indices)
    
     body_model_right, body_model_left = load_body_model(model_path="body_models")
