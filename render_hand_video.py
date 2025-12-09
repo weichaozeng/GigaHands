@@ -27,9 +27,9 @@ def parse_args():
     )
     parser.add_argument('--dataset_root', type=Path, default="dataset/",
                         help='Path to the dataset root folder')
-    parser.add_argument('--scene_name', type=str, default="p007-laptop",
+    parser.add_argument('--scene_name', type=str, default="p001-folder",
                         help='Scene name (e.g. 17_instruments)')
-    parser.add_argument('--session_name', type=str, default="p007-laptop",
+    parser.add_argument('--session_name', type=str, default="p001-folder",
                         help='Session name (e.g. p003-instrument)')
     parser.add_argument('--seq_id', type=int, default=0,
                         help='Sequence ID (e.g. 33)')
