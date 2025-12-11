@@ -23,7 +23,7 @@ with open(root, mode='r', encoding='utf-8') as f:
             print(f"Missing mano params {mano_param_path} or kp_3d {kp_3d_path} for scene {scene_name} seq {seq_id}")
             continue
         for path in rgb_paths:
-            video_path = os.path.join(rgb_root, path)
+            video_path = os.path.join(rgb_root, scene_name, path)
             if not os.path.exists(video_path):
                 print(f"Video path does not exist: {video_path}")
                 continue
