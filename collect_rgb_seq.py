@@ -37,4 +37,5 @@ with open(root, mode='r', encoding='utf-8') as f:
             i += 1
 with open(save_path, 'w') as f:
     json.dump(res, f, indent=2)
+    print(f"Processed {i} sequences. Info saved to {save_path}")
 
