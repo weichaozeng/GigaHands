@@ -20,7 +20,7 @@ with open(root, mode='r', encoding='utf-8') as f:
         mano_param_path = os.path.join(params_root, scene_name, "params", f"{int(seq_id):03d}.json")
         kp_3d_path = os.path.join(params_root, scene_name, "keypoints_3d_mano_align", f"{int(seq_id):03d}.json")
         if not os.path.exists(mano_param_path) or not os.path.exists(kp_3d_path):
-            print(f"Missing mano params or kp_3d for scene {scene_name} seq {seq_id}")
+            print(f"Missing mano params {mano_param_path} or kp_3d {kp_3d_path} for scene {scene_name} seq {seq_id}")
             continue
         for path in rgb_paths:
             video_path = os.path.join(rgb_root, path)
