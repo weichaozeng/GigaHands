@@ -1,7 +1,7 @@
 import os
 import json
 import csv
-
+from pathlib import Path
 res = {}
 save_path = "/home/zvc/Data/GigaHands/multiview_rgb_seq_info.json"
 root = "/home/zvc/Data/GigaHands/multiview_camera_video_map.csv"
@@ -44,7 +44,7 @@ save_folder = "/home/zvc/Data/GigaHands/symlinks"
 if not os.path.exists(save_folder):
     os.makedirs(save_folder)
 for video_path in res.keys():
-    relative_path = video_path.relative_to(rgb_root)
+    relative_path = Path(video_path).relative_to(Path(rgb_root))
     new_filename = str(relative_path).replace(os.sep, "_")
     symlink_dir = os.path.join(save_folder, new_filename.split(".")[0], "rgb")
     os.makedirs(symlink_dir, exist_ok=True)
