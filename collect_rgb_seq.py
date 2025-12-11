@@ -5,8 +5,8 @@ import csv
 res = {}
 save_path = "/home/zvc/Data/GigaHands/multiview_rgb_seq_info.json"
 root = "/home/zvc/Data/GigaHands/multiview_camera_video_map.csv"
-rgb_root = os.path.join(root, "multiview_rgb_videos")
-params_root = os.path.join(root, "hand_poses")
+rgb_root = "/home/zvc/Data/GigaHands/multiview_rgb_videos"
+params_root = "/home/zvc/Data/GigaHands/hand_poses"
 with open(root, mode='r', encoding='utf-8') as f:
     reader = csv.reader(f)
     i = 0
