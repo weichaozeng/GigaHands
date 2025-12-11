@@ -24,7 +24,9 @@ with open(root, mode='r', encoding='utf-8') as f:
             continue
         for path in rgb_paths:
             video_path = os.path.join(rgb_root, scene_name, path)
-            if not os.path.isfile(video_path):
+            if path == "":
+                continue
+            elif not os.path.isfile(video_path):
                 print(f"Video path does not exist: {video_path}")
                 continue
             elif video_path in res:
