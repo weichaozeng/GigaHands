@@ -49,7 +49,8 @@ for video_path in res.keys():
     symlink_dir = os.path.join(save_folder, new_filename.split(".")[0], "rgb")
     os.makedirs(symlink_dir, exist_ok=True)
     symlink_path = os.path.join(symlink_dir, new_filename)
-    if symlink_path.exists():
+    if os.path.exists(symlink_path):
+        print(f"Symlink already exists, removing: {symlink_path}")
         os.remove(symlink_path)
     os.symlink(video_path, symlink_path)
 
