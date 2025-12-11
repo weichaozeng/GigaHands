@@ -5,7 +5,7 @@ import csv
 res = {}
 save_path = "/home/zvc/Data/GigaHands/multiview_rgb_seq_info.json"
 root = "/home/zvc/Data/GigaHands/multiview_camera_video_map.csv"
-rgb_root = "/home/zvc/Data/GigaHands/multiview_rgb_videos"
+rgb_root = "/home/zvc/Data/GigaHands/multiview_rgb_vids"
 params_root = "/home/zvc/Data/GigaHands/hand_poses"
 with open(root, mode='r', encoding='utf-8') as f:
     reader = csv.reader(f)
@@ -24,7 +24,7 @@ with open(root, mode='r', encoding='utf-8') as f:
             continue
         for path in rgb_paths:
             video_path = os.path.join(rgb_root, scene_name, path)
-            if not os.path.exists(video_path):
+            if not os.path.isfile(video_path):
                 print(f"Video path does not exist: {video_path}")
                 continue
             elif video_path in res:
