@@ -39,3 +39,18 @@ with open(save_path, 'w') as f:
     json.dump(res, f, indent=2)
     print(f"Processed {i} sequences. Info saved to {save_path}")
 
+# create soft link
+save_folder = "/home/zvc/Data/GigaHands/symlinks"
+if not os.path.exists(save_folder):
+    os.makedirs(save_folder)
+for video_path in res.keys():
+    relative_path = video_path.relative_to(rgb_root)
+    new_filename = str(relative_path).replace(os.sep, "_")
+    symlink_dir = os.path.join(save_folder, new_filename.split(".")[0], "rgb")
+    os.makedirs(symlink_dir, exist_ok=True)
+    symlink_path = os.path.join(symlink_dir, new_filename)
+    if symlink_path.exists():
+        os.remove(symlink_path)
+    os.symlink(video_path, symlink_path)
+
+print("Done! All symlinks created.")
